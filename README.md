@@ -33,10 +33,12 @@ path,text
 ...
 ```
 
-1. [TAT Dataset](https://paperswithcode.com/dataset/tat)
+#### 1. [TAT Dataset](https://paperswithcode.com/dataset/tat)
 
 Audio: Taiwanese Audio
+
 Label: Taiwanese Text (台文)
+
 E.g.
 ```
 結果嘛是發生林家滅門血案。
@@ -48,9 +50,10 @@ E.g.
 - test: 10.622789305555557 hr
 
 
-2. TD: Taiwanese Drama Dataset (unreleased)
+#### 2. TD: Taiwanese Drama Dataset (unreleased)
 
 Audio: Taiwanese Audio
+
 Label: Chinese Text
 
 - total: 341.6263453990207 hr
@@ -71,7 +74,7 @@ We finetune `whisper-large-v2` by [LoRA](https://arxiv.org/abs/2106.09685) with 
 
 <table border="1">
 <thead>
-<tr><th>Split</th><th> Finetuning Epoch </th><th> Score on TAT</th><th> Score on TD</th><th> Model</th></tr>
+<tr><th>Split</th><th> Finetuning Epoch </th><th> CER on TAT</th><th> CER on TD</th><th> Model</th></tr>
 </thead>
 <tbody>
 <tr><td>Eval</td><td> 1</td><td> 0.25106742875850874</td><td> 0.345572974575643</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch1-total5epoch</td></tr>
@@ -87,7 +90,8 @@ We finetune `whisper-large-v2` by [LoRA](https://arxiv.org/abs/2106.09685) with 
 ---
 
 Prediction results are in directories `TAT-prediction` and `TD-prediction`.
-Format: `<label>, <prediction>`
+
+Format: `<label>, <prediction>, <CER>`
 
 ## User Guide
 

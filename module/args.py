@@ -42,6 +42,7 @@ def parse_args(args):
     parser.add_argument("--repo_name", type=str, default="whisper-large-v2-Lora", help="Path to save processor, processed-data")
     parser.add_argument("--hub_username", type=str, required=True)
     parser.add_argument("--hub_use_auth_token", type=str, required=True)
+    parser.add_argument("--hub_model_name", type=str, required=True)
 
     input_arg, model_arg = parser.parse_known_args(args)
     input_arg = {k: v for k, v in vars(input_arg).items() if v is not None}

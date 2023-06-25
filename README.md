@@ -14,6 +14,83 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
+<h1 align="center"> <p>🤗 Taiwanese Finetune</p></h1>
+
+
+## User Guide
+
+### Train
+
+#### Run train script with required args
+
+(You should comment out the Config section in `train_peft.py`)
+
+```
+python3 train_peft.py  
+    --model_config <whisper_model_name_or_path> \
+    --tokenize_config <tokenizer_name_or_path> \
+    --repo_name <path/to/store/processed/data> \
+    --train_data <path/to/train/csv>
+    --test_data <path/to/test/csv> \
+    --hub_username <hub_username> \
+    --hub_use_auth_token <hub_use_auth_token> \
+    --hub_model_name <hub_model_name> \
+```
+
+#### Reference
+- https://github.com/ga642381/Taiwanese-Whisper
+- https://github.com/huggingface/peft/blob/main/examples/int8_training/peft_bnb_whisper_large_v2_training.ipynb
+
+#### Note
+
+Simply referencing the materials above will cause 2 problems:
+
+1. Model can only be evaluated and saved after fininsh training.
+
+Since `compute_metric` can not be set in trainer (See [reason](https://github.com/huggingface/peft/blob/main/examples/int8_training/peft_bnb_whisper_large_v2_training.ipynb)), it causes error if save_strategy is set "steps" or "epoch".
+
+Error log:
+```
+  File "/home/hungyi2022/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1696, in train
+    return inner_training_loop(
+  File "/home/hungyi2022/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2052, in _inner_training_loop
+    self._maybe_log_save_evaluate(tr_loss, model, trial, epoch, ignore_keys_for_eval)
+  File "/home/hungyi2022/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2360, in _maybe_log_save_evaluate
+    self._save_checkpoint(model, trial, metrics=metrics)
+  File "/home/hungyi2022/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2473, in _save_checkpoint
+    metric_value = metrics[metric_to_check]
+KeyError: 'eval_cer'
+```
+
+2. fp16 and int8 can not be set together.
+
+https://github.com/mymusise/ChatGLM-Tuning/issues/23
+
+---
+
+In addition, directly modify model in training script in https://github.com/ga642381/Taiwanese-Whisper to `PeftModel` will cause this problem:
+
+Error occurs after train and evaluate after 1st epoch because `peft` freeze some modules of model.
+
+Error log:
+```
+File "train_large.py", line 310, in main
+trainer.train(input_arg.get("checkpoint", None))
+File "/home/hungyi2022/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1696, in train
+return inner_training_loop(
+File "/home/hungyi2022/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1973, in _inner_training_loop
+tr_loss_step = self.training_step(model, inputs)
+File "/home/hungyi2022/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2797, in training_step
+self.scaler.scale(loss).backward()
+File "/home/hungyi2022/.local/lib/python3.8/site-packages/torch/_tensor.py", line 488, in backward
+torch.autograd.backward(
+File "/home/hungyi2022/.local/lib/python3.8/site-packages/torch/autograd/init.py", line 197, in backward
+Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
+```
+
+---
+
 <h1 align="center"> <p>🤗 PEFT</p></h1>
 <h3 align="center">
     <p>State-of-the-art Parameter-Efficient Fine-Tuning (PEFT) methods</p>

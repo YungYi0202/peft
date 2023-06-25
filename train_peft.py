@@ -115,8 +115,7 @@ def train_n_evaluate(epoch_cnt, model, input_arg, processor, data_collator, data
     model.config.use_cache = False  # silence the warnings. Please re-enable for inference!
     
     # Push to Hub    
-    peft_model_id = f"{input_arg[hub_username]}/" + f"tw-zh2.6-{input_arg['model_config']}-Lora".replace("/", "-")
-    peft_model_id += f"-epoch{epoch_cnt+1)}-total{input_arg['epoch']}epoch"
+    peft_model_id = f"{input_arg["hub_username"]}/{input_arg["hub_model_name"]}-epoch{epoch_cnt+1}-total{input_arg['epoch']}epoch" 
     print(f"peft_model_id: {peft_model_id}")
 
     if not input_arg.get("only_eval", False):

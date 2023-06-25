@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<h1 align="center"> <p>🤗 Taiwanese Finetune</p></h1>
+<h1 align="center"> <p>🤗 Taiwanese Finetuning</p></h1>
 
 ## Experiment
 
@@ -23,6 +23,15 @@ limitations under the License.
 https://huggingface.co/openai/whisper-large-v2
 
 ### Data
+
+The format of data has to be csv:
+
+```
+path,text
+/work/hungyi2022/aics/data/TAT-train-master/condenser/wav/TA_TAF0019/0010-6.34-03.wav,我佮伊攏耍甲足歡喜的。
+/work/hungyi2022/aics/data/TAT-train-master/condenser/wav/TA_TAF0019/0010-4.48-03.wav,教阮愛長志。
+...
+```
 
 1. [TAT Dataset](https://paperswithcode.com/dataset/tat)
 
@@ -42,7 +51,7 @@ E.g.
 2. TD: Taiwanese Drama Dataset (unreleased)
 
 Audio: Taiwanese Audio
-Label: Chinese Text (台文)
+Label: Chinese Text
 
 - total: 341.6263453990207 hr
 
@@ -52,22 +61,33 @@ We only use the audio whose time length is longer than 2.6 second, and divide it
 - eval: 10.378483784722222 hr
 - test: 10.39038796875 hr
 
-### Result
+### Experiment Result
+
+We finetune `whisper-large-v2` by [LoRA](https://arxiv.org/abs/2106.09685) with the following hyperparameters:
+- epoch: 5
+- batch * gradient accumulation: 8
+- lr: 2.34e-4
+- weight decay: 0.02
 
 <table border="1">
 <thead>
-<tr><th>Split</th><th> Finetuning Epoch </th><th> CER on TAT</th><th> CER on TD</th><th> Model</th><th> Prediction File</th></tr>
+<tr><th>Split</th><th> Finetuning Epoch </th><th> Score on TAT</th><th> Score on TD</th><th> Model</th></tr>
 </thead>
 <tbody>
-<tr><td>Eval</td><td> 1</td><td> 0.25106742875850874</td><td> 0.345572974575643</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch1-total5epoch</td><td> prediction/epoch1_total5epoch_eval.csv</td></tr>
-<tr><td>Eval</td><td> 2</td><td> 0.23085107834176818</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch2-total5epoch</td><td> prediction/epoch2_total5epoch_eval.csv</td></tr>
-<tr><td>Eval</td><td> 3</td><td> 0.26496787482777906</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch3-total5epoch</td><td> prediction/epoch3_total5epoch_eval.csv</td></tr>
-<tr><td>Eval</td><td> 4</td><td> 0.23628030065341646</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch4-total5epoch</td><td> prediction/epoch4_total5epoch_eval.csv</td></tr>
-<tr><td>Eval</td><td> 5</td><td> 0.2228163749710123</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch5-total5epoch</td><td> prediction/epoch5_total5epoch_eval.csv</td></tr>
-<tr><td>Test</td><td> 0</td><td> 0.74888</td><td> ?</td><td> openai/whisper-large-v2</td><td> prediction/whiper-large-v2_test.csv</td></tr>
-<tr><td>Test</td><td> 5</td><td> 0.22816428181965545</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch5-total5epoch</td><td> prediction/epoch5_total5epoch_test.csv</td></tr>
+<tr><td>Eval</td><td> 1</td><td> 0.25106742875850874</td><td> 0.345572974575643</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch1-total5epoch</td></tr>
+<tr><td>Eval</td><td> 2</td><td> 0.23085107834176818</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch2-total5epoch</td></tr>
+<tr><td>Eval</td><td> 3</td><td> 0.26496787482777906</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch3-total5epoch</td></tr>
+<tr><td>Eval</td><td> 4</td><td> 0.23628030065341646</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch4-total5epoch</td></tr>
+<tr><td>Eval</td><td> 5</td><td> 0.2228163749710123</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch5-total5epoch</td></tr>
+<tr><td>Test</td><td> 0</td><td> 0.74888</td><td> ?</td><td> openai/whisper-large-v2</td></tr>
+<tr><td>Test</td><td> 5</td><td> 0.22816428181965545</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch5-total5epoch</td></tr>
 </tbody>
 </table>
+
+---
+
+Prediction results are in directories `TAT-prediction` and `TD-prediction`.
+Format: `<label>, <prediction>`
 
 ## User Guide
 
@@ -94,7 +114,7 @@ Add `--only_eval` when running `train_peft.py`.
 
 ## Developer Guide
 
-This script allows you to finetune Whisper by Lora and "evaluate & save model on hub" for every epoch.
+This script allows you to finetune Whisper by Lora and "evaluate & save model on hub" for every epoch. (by using customed trainer)
 
 ### Reference
 - https://github.com/ga642381/Taiwanese-Whisper

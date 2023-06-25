@@ -16,12 +16,62 @@ limitations under the License.
 
 <h1 align="center"> <p>🤗 Taiwanese Finetune</p></h1>
 
+## Experiment
+
+### Model
+
+https://huggingface.co/openai/whisper-large-v2
+
+### Data
+
+1. [TAT Dataset](https://paperswithcode.com/dataset/tat)
+
+Audio: Taiwanese Audio
+Label: Taiwanese Text (台文)
+E.g.
+```
+結果嘛是發生林家滅門血案。
+無論查埔、查某的店頭家。
+``` 
+
+- train: 83.37022932291666 hr
+- valid: 10.364263645833333 hr
+- test: 10.622789305555557 hr
+
+
+2. TD: Taiwanese Drama Dataset (unreleased)
+
+Audio: Taiwanese Audio
+Label: Chinese Text (台文)
+
+- total: 341.6263453990207 hr
+
+We only use the audio whose time length is longer than 2.6 second, and divide it into 3 split manually.
+
+- train: 83.21494682291667 hr
+- eval: 10.378483784722222 hr
+- test: 10.39038796875 hr
+
+### Result
+
+<table border="1">
+<thead>
+<tr><th>Split</th><th> Finetuning Epoch </th><th> CER on TAT</th><th> CER on TD</th><th> Model</th><th> Prediction File</th></tr>
+</thead>
+<tbody>
+<tr><td>Eval</td><td> 1</td><td> 0.25106742875850874</td><td> 0.345572974575643</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch1-total5epoch</td><td> prediction/epoch1_total5epoch_eval.csv</td></tr>
+<tr><td>Eval</td><td> 2</td><td> 0.23085107834176818</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch2-total5epoch</td><td> prediction/epoch2_total5epoch_eval.csv</td></tr>
+<tr><td>Eval</td><td> 3</td><td> 0.26496787482777906</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch3-total5epoch</td><td> prediction/epoch3_total5epoch_eval.csv</td></tr>
+<tr><td>Eval</td><td> 4</td><td> 0.23628030065341646</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch4-total5epoch</td><td> prediction/epoch4_total5epoch_eval.csv</td></tr>
+<tr><td>Eval</td><td> 5</td><td> 0.2228163749710123</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch5-total5epoch</td><td> prediction/epoch5_total5epoch_eval.csv</td></tr>
+<tr><td>Test</td><td> 0</td><td> 0.74888</td><td> ?</td><td> openai/whisper-large-v2</td><td> prediction/whiper-large-v2_test.csv</td></tr>
+<tr><td>Test</td><td> 5</td><td> 0.22816428181965545</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch5-total5epoch</td><td> prediction/epoch5_total5epoch_test.csv</td></tr>
+</tbody>
+</table>
 
 ## User Guide
 
-### Train
-
-#### Run train script with required args
+### Run train script with required args
 
 (You should comment out the Config section in `train_peft.py`)
 
@@ -37,40 +87,24 @@ python3 train_peft.py
     --hub_model_name <hub_model_name> \
 ```
 
-#### Reference
+### Run evaluate and test script
+
+Add `--only_eval` when running `train_peft.py`.
+
+
+## Developer Guide
+
+This script allows you to finetune Whisper by Lora and "evaluate & save model on hub" for every epoch.
+
+### Reference
 - https://github.com/ga642381/Taiwanese-Whisper
 - https://github.com/huggingface/peft/blob/main/examples/int8_training/peft_bnb_whisper_large_v2_training.ipynb
 
-#### Note
+### Note
 
-Simply referencing the materials above will cause 2 problems:
+Directly modify model in training script in https://github.com/ga642381/Taiwanese-Whisper to `PeftModel` will cause this problem:
 
-1. Model can only be evaluated and saved after fininsh training.
-
-Since `compute_metric` can not be set in trainer (See [reason](https://github.com/huggingface/peft/blob/main/examples/int8_training/peft_bnb_whisper_large_v2_training.ipynb)), it causes error if save_strategy is set "steps" or "epoch".
-
-Error log:
-```
-  File "/home/hungyi2022/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1696, in train
-    return inner_training_loop(
-  File "/home/hungyi2022/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2052, in _inner_training_loop
-    self._maybe_log_save_evaluate(tr_loss, model, trial, epoch, ignore_keys_for_eval)
-  File "/home/hungyi2022/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2360, in _maybe_log_save_evaluate
-    self._save_checkpoint(model, trial, metrics=metrics)
-  File "/home/hungyi2022/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2473, in _save_checkpoint
-    metric_value = metrics[metric_to_check]
-KeyError: 'eval_cer'
-```
-
-2. fp16 and int8 can not be set together.
-
-https://github.com/mymusise/ChatGLM-Tuning/issues/23
-
----
-
-In addition, directly modify model in training script in https://github.com/ga642381/Taiwanese-Whisper to `PeftModel` will cause this problem:
-
-Error occurs after train and evaluate after 1st epoch because `peft` freeze some modules of model.
+Error occurs after training and then evaluating after 1st epoch because `peft` freeze some modules of model.
 
 Error log:
 ```
@@ -88,6 +122,30 @@ File "/home/hungyi2022/.local/lib/python3.8/site-packages/torch/autograd/init.py
 Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
 RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
 ```
+
+
+Using example script in `peft` still causes 2 problems:
+
+1. Model can only be evaluated and saved after training stage is finished.
+
+Since `compute_metric` can not be set in trainer (See [reason](https://github.com/huggingface/peft/blob/main/examples/int8_training/peft_bnb_whisper_large_v2_training.ipynb)), it causes error if save_strategy is set "steps" or "epoch".
+
+Error log:
+```
+  File "/home/hungyi2022/.local/lib/python3.8/site-packages/transformers/trainer.py", line 1696, in train
+    return inner_training_loop(
+  File "/home/hungyi2022/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2052, in _inner_training_loop
+    self._maybe_log_save_evaluate(tr_loss, model, trial, epoch, ignore_keys_for_eval)
+  File "/home/hungyi2022/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2360, in _maybe_log_save_evaluate
+    self._save_checkpoint(model, trial, metrics=metrics)
+  File "/home/hungyi2022/.local/lib/python3.8/site-packages/transformers/trainer.py", line 2473, in _save_checkpoint
+    metric_value = metrics[metric_to_check]
+KeyError: 'eval_cer'
+```
+
+2. `fp16` and `int8` can not be set together.
+
+https://github.com/mymusise/ChatGLM-Tuning/issues/23
 
 ---
 

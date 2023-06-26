@@ -78,7 +78,7 @@ We finetune `whisper-large-v2` by [LoRA](https://arxiv.org/abs/2106.09685) with 
 
 #### Dataset: TAT
 
-Prediction file: `data/TAT-prediction`
+Prediction file: `TAT-prediction`
 
 <table border="1">
 <thead>
@@ -96,7 +96,7 @@ Prediction file: `data/TAT-prediction`
 
 #### Dataset: TD-104hr
 
-Prediction file: `data/TD-104hr-prediction`
+Prediction file: `TD-104hr-prediction`
 
 <table border="1">
 <thead>
@@ -116,7 +116,7 @@ Prediction file: `data/TD-104hr-prediction`
 
 Since it takes 31hr to train for a epoch, we didn't finish 5 epochs.
 
-Prediction file: `data/TD-341hr-prediction`
+Prediction file: `TD-341hr-prediction`
 
 <table border="1">
 <thead>

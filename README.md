@@ -56,10 +56,12 @@ Audio: Taiwanese Audio
 
 Label: Chinese Text
 
+Set1: TD-341hr (`data/TD-341hr`)
 - total: 341.6263453990207 hr
 
-We only use the audio whose time length is longer than 2.6 second, and divide it into 3 split manually.
+We only use the audio whose time length is longer than 2.6 second, and divide it into 3 split manually. 
 
+Set2: TD-104hr (`data/TD-104hr`)
 - train: 83.21494682291667 hr
 - eval: 10.378483784722222 hr
 - test: 10.39038796875 hr
@@ -71,27 +73,67 @@ We finetune `whisper-large-v2` by [LoRA](https://arxiv.org/abs/2106.09685) with 
 - batch * gradient accumulation: 8
 - lr: 2.34e-4
 - weight decay: 0.02
+- warmup step: 100
+
+
+#### Dataset: TAT
+
+Prediction file: `data/TAT-prediction`
 
 <table border="1">
 <thead>
-<tr><th>Split</th><th> Finetuning Epoch </th><th> CER on TAT</th><th> CER on TD</th><th> Model</th></tr>
+<tr><th>Finetuning Epoch </th><th> CER on TAT eval</th><th> CER on TAT test</th><th> Huggingface Model</th></tr>
 </thead>
 <tbody>
-<tr><td>Eval</td><td> 1</td><td> 0.25106742875850874</td><td> 0.345572974575643</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch1-total5epoch</td></tr>
-<tr><td>Eval</td><td> 2</td><td> 0.23085107834176818</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch2-total5epoch</td></tr>
-<tr><td>Eval</td><td> 3</td><td> 0.26496787482777906</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch3-total5epoch</td></tr>
-<tr><td>Eval</td><td> 4</td><td> 0.23628030065341646</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch4-total5epoch</td></tr>
-<tr><td>Eval</td><td> 5</td><td> 0.2228163749710123</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch5-total5epoch</td></tr>
-<tr><td>Test</td><td> 0</td><td> 0.74888</td><td> ?</td><td> openai/whisper-large-v2</td></tr>
-<tr><td>Test</td><td> 5</td><td> 0.22816428181965545</td><td> ?</td><td> cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch5-total5epoch</td></tr>
+<tr><td>0</td><td>NAN</td><td>0.74888</td><td>openai/whisper-large-v2</td></tr>
+<tr><td>1</td><td>0.25106742875850874</td><td>0.2580939890066167</td><td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch1-total5epoch</td></tr>
+<tr><td>2</td><td>0.23085107834176818</td><td>0.231494716986693</td><td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch2-total5epoch</td></tr>
+<tr><td>3</td><td>0.26496787482777906</td><td>0.2812449343491652</td><td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch3-total5epoch</td></tr>
+<tr><td>4</td><td>0.23628030065341646</td><td>0.24514065930827156</td><td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch4-total5epoch</td></tr>
+<tr><td>5</td><td>0.2228163749710123</td><td>0.22816428181965545</td><td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch5-total5epoch</td></tr>
 </tbody>
 </table>
 
+#### Dataset: TD-104hr
+
+Prediction file: `data/TD-104hr-prediction`
+
+<table border="1">
+<thead>
+<tr><th>Finetuning Epoch</th><th>CER on TD-104hr eval</th><th>CER on TD-104hr test</th><th>Huggingface Model</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>NAN</td><td>?</td><td>openai/whisper-large-v2</td></tr>
+<tr><td>1</td><td>0.345572974575643</td><td>?</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch1-total5epoch</td></tr>
+<tr><td>2</td><td>0.3354458527907494</td><td>?</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch2-total5epoch</td></tr>
+<tr><td>3</td><td>?</td><td>?</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch3-total5epoch</td></tr>
+<tr><td>4</td><td>?</td><td>?</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch4-total5epoch</td></tr>
+<tr><td>5</td><td>?</td><td>?</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch5-total5epoch</td></tr>
+</tbody>
+</table>
+
+#### Dataset: TD-341hr
+
+Since it takes 31hr to train for a epoch, we didn't finish 5 epochs.
+
+Prediction file: `data/TD-341hr-prediction`
+
+<table border="1">
+<thead>
+<tr><th>Finetuning Epoch</th><th>CER on TD-341hr eval</th><th>CER on TD-341hr test</th><th>Huggingface Model</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>NAN</td><td>?</td><td>openai/whisper-large-v2</td></tr>
+<tr><td>1</td><td>0.32567932011331446</td><td>?</td><td>cathyi/tw-zh-openai-whisper-large-v2-Lora-epoch1-total5epoch</td></tr>
+</tbody>
+</table>
 ---
 
 Prediction results are in directories `TAT-prediction` and `TD-prediction`.
 
 Format: `<label>, <prediction>, <CER>`
+
+---
 
 ## User Guide
 
@@ -115,6 +157,7 @@ python3 train_peft.py
 
 Add `--only_eval` when running `train_peft.py`.
 
+---
 
 ## Developer Guide
 

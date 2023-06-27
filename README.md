@@ -94,6 +94,8 @@ Prediction file: `TAT-prediction`
 </tbody>
 </table>
 
+![](https://hackmd.io/_uploads/r1_sxFdOh.png)
+
 #### Dataset: TD-104hr
 
 Prediction file: `TD-104hr-prediction`
@@ -103,14 +105,16 @@ Prediction file: `TD-104hr-prediction`
 <tr><th>Finetuning Epoch</th><th>CER on TD-104hr eval</th><th>CER on TD-104hr test</th><th>Huggingface Model</th></tr>
 </thead>
 <tbody>
-<tr><td>0</td><td>NAN</td><td>?</td><td>openai/whisper-large-v2</td></tr>
-<tr><td>1</td><td>0.345572974575643</td><td>?</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch1-total5epoch</td></tr>
-<tr><td>2</td><td>0.3354458527907494</td><td>?</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch2-total5epoch</td></tr>
-<tr><td>3</td><td>?</td><td>?</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch3-total5epoch</td></tr>
-<tr><td>4</td><td>?</td><td>?</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch4-total5epoch</td></tr>
+<tr><td>0</td><td>NAN</td><td>0.77047</td><td>openai/whisper-large-v2</td></tr>
+<tr><td>1</td><td>0.345572974575643</td><td>0.34513798303312887</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch1-total5epoch</td></tr>
+<tr><td>2</td><td>0.3354458527907494</td><td>0.3316403467384567</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch2-total5epoch</td></tr>
+<tr><td>3</td><td>0.3304054554888444</td><td>0.3249701645805001</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch3-total5epoch</td></tr>
+<tr><td>4</td><td>0.3266066266399822</td><td>?</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch4-total5epoch</td></tr>
 <tr><td>5</td><td>?</td><td>?</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch5-total5epoch</td></tr>
 </tbody>
 </table>
+
+![](https://hackmd.io/_uploads/SymoBY_O2.png)
 
 #### Dataset: TD-341hr
 

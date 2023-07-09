@@ -76,51 +76,121 @@ We finetune `whisper-large-v2` by [LoRA](https://arxiv.org/abs/2106.09685) with 
 - warmup step: 100
 
 
-#### Dataset: TAT
+#### Finetune on TAT Dataset
 
-Prediction file: `TAT-prediction`
-
-<table border="1">
-<thead>
-<tr><th>Finetuning Epoch </th><th> CER on TAT eval</th><th> CER on TAT test</th><th> Huggingface Model</th></tr>
-</thead>
-<tbody>
-<tr><td>0</td><td>NAN</td><td>0.74888</td><td>openai/whisper-large-v2</td></tr>
-<tr><td>1</td><td>0.25106742875850874</td><td>0.2580939890066167</td><td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch1-total5epoch</td></tr>
-<tr><td>2</td><td>0.23085107834176818</td><td>0.231494716986693</td><td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch2-total5epoch</td></tr>
-<tr><td>3</td><td>0.26496787482777906</td><td>0.2812449343491652</td><td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch3-total5epoch</td></tr>
-<tr><td>4</td><td>0.23628030065341646</td><td>0.24514065930827156</td><td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch4-total5epoch</td></tr>
-<tr><td>5</td><td>0.2228163749710123</td><td>0.22816428181965545</td><td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch5-total5epoch</td></tr>
-</tbody>
+<table>
+    <tr>
+        <td>Huggingface Model</td>
+        <td>Finetuning Epoch </td>
+        <td>CER on TAT eval</td>
+        <td>CER on TAT test</td>
+        <td>CER on TD-104hr test</td>
+    </tr>
+    <tr>
+        <td>openai/whisper-large-v2</td>
+        <td>0</td>
+        <td>NAN</td>
+        <td>0.74888</td>
+        <td>0.77047</td>
+    </tr>
+    <tr>
+        <td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch1-total5epoch</td>
+        <td>1</td>
+        <td>0.25106742875850874</td>
+        <td>0.2580939890066167</td>
+        <td>0.9583599308003293</td>
+    </tr>
+    <tr>
+        <td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch2-total5epoch</td>
+        <td>2</td>
+        <td>0.23085107834176818</td>
+        <td>0.231494716986693</td>
+        <td>0.9343435745145384</td>
+    </tr>
+    <tr>
+        <td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch3-total5epoch</td>
+        <td>3</td>
+        <td>0.26496787482777906</td>
+        <td>0.2812449343491652</td>
+        <td>1.005236231763389</td>
+    </tr>
+    <tr>
+        <td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch4-total5epoch</td>
+        <td>4</td>
+        <td>0.23628030065341646</td>
+        <td>0.24514065930827156</td>
+        <td>?</td>
+    </tr>
+    <tr>
+        <td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch5-total5epoch</td>
+        <td>5</td>
+        <td>0.2228163749710123</td>
+        <td>0.22816428181965545</td>
+        <td>?</td>
+    </tr>
 </table>
 
 ![](https://hackmd.io/_uploads/r1_sxFdOh.png)
 
-#### Dataset: TD-104hr
+#### Finetune on TD-104hr Dataset
 
-Prediction file: `TD-104hr-prediction`
-
-<table border="1">
-<thead>
-<tr><th>Finetuning Epoch</th><th>CER on TD-104hr eval</th><th>CER on TD-104hr test</th><th>Huggingface Model</th></tr>
-</thead>
-<tbody>
-<tr><td>0</td><td>NAN</td><td>0.77047</td><td>openai/whisper-large-v2</td></tr>
-<tr><td>1</td><td>0.345572974575643</td><td>0.34513798303312887</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch1-total5epoch</td></tr>
-<tr><td>2</td><td>0.3354458527907494</td><td>0.3316403467384567</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch2-total5epoch</td></tr>
-<tr><td>3</td><td>0.3304054554888444</td><td>0.3249701645805001</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch3-total5epoch</td></tr>
-<tr><td>4</td><td>0.3266066266399822</td><td>0.32179697112671496</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch4-total5epoch</td></tr>
-<tr><td>5</td><td>?</td><td>?</td><td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch5-total5epoch</td></tr>
-</tbody>
+<table>
+    <tr>
+        <td>Huggingface Model</td>
+        <td>Finetuning Epoch</td>
+        <td>CER on TD-104hr eval</td>
+        <td>CER on TD-104hr test</td>
+        <td>CER on TAT</td>
+    </tr>
+    <tr>
+        <td>openai/whisper-large-v2</td>
+        <td>0</td>
+        <td>NAN</td>
+        <td>0.77047</td>
+        <td>0.74888</td>
+    </tr>
+    <tr>
+        <td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch1-total5epoch</td>
+        <td>1</td>
+        <td>0.345572974575643</td>
+        <td>0.34513798303312887</td>
+        <td>0.6583209301640166</td>
+    </tr>
+    <tr>
+        <td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch2-total5epoch</td>
+        <td>2</td>
+        <td>0.3354458527907494</td>
+        <td>0.3316403467384567</td>
+        <td>0.6577756819287051</td>
+    </tr>
+    <tr>
+        <td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch3-total5epoch</td>
+        <td>3</td>
+        <td>0.3304054554888444</td>
+        <td>0.3249701645805001</td>
+        <td>0.6865412104510824</td>
+    </tr>
+    <tr>
+        <td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch4-total5epoch</td>
+        <td>4</td>
+        <td>0.3266066266399822</td>
+        <td>0.32179697112671496</td>
+        <td>0.696237787176351</td>
+    </tr>
+    <tr>
+        <td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch5-total5epoch</td>
+        <td>5</td>
+        <td>0.32601363872211103</td>
+        <td>?</td>
+        <td>0.7410218246658512</td>
+    </tr>
 </table>
 
 ![](https://hackmd.io/_uploads/S1Q-5WY_h.png)
 
-#### Dataset: TD-341hr
+#### Finetune on TD-341hr Dataset
 
 Since it takes 31hr to train for a epoch, we didn't finish 5 epochs.
-
-Prediction file: `TD-341hr-prediction`
 
 <table border="1">
 <thead>

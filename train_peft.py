@@ -242,10 +242,10 @@ def main(arg=None):
             # cache_dir=None, 
             )
         dataset = dataset.filter(lambda e: nlp2.is_file_exist(e["path"]))
-        if "custom_set_test" in input_arg:
+        if "test_set" in input_arg:
             dataset_test = load_dataset(
                 "csv", 
-                data_files=input_arg["custom_set_test"], 
+                data_files=input_arg["test_set"], 
                 cache_dir=input_arg["cache_dir"],
                 # cache_dir=None,
             )

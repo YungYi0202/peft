@@ -9,7 +9,7 @@ def parse_args(args):
     parser.add_argument("--tokenize_config", type=str, default=None)
     parser.add_argument("--model_config", type=str, default=None)
     parser.add_argument("--sweep_split_shard", type=int)
-    parser.add_argument("--epoch", type=int, default=5)
+    parser.add_argument("--epoch", type=int, default=1)
     parser.add_argument("--batch", type=int, default=8)
     parser.add_argument("--logging_steps", type=int)
     parser.add_argument("--eval_steps", type=int)

@@ -119,14 +119,14 @@ We finetune `whisper-large-v2` by [LoRA](https://arxiv.org/abs/2106.09685) with 
         <td>4</td>
         <td>0.23628030065341646</td>
         <td>0.24514065930827156</td>
-        <td>?</td>
+        <td>0.9578973661569204</td>
     </tr>
     <tr>
         <td>cathyi/tw-tw-openai-whisper-large-v2-Lora-epoch5-total5epoch</td>
         <td>5</td>
         <td>0.2228163749710123</td>
         <td>0.22816428181965545</td>
-        <td>?</td>
+        <td>0.9506813577197414</td>
     </tr>
 </table>
 
@@ -181,7 +181,7 @@ We finetune `whisper-large-v2` by [LoRA](https://arxiv.org/abs/2106.09685) with 
         <td>cathyi/tw-zh2.6-openai-whisper-large-v2-Lora-epoch5-total5epoch</td>
         <td>5</td>
         <td>0.32601363872211103</td>
-        <td>?</td>
+        <td>0.31904008585199783</td>
         <td>0.7410218246658512</td>
     </tr>
 </table>
